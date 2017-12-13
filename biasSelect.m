@@ -51,8 +51,11 @@ function struct = biasSelect(CElist, CSElist, XYZ)
         
     end
         
-    [output1, ranks] = sort(valueArray);
-    output2 = valueSEArray(ranks);
-    struct = {output1, output2};
+    [~, ranks] = sort(valueArray);
+    output1 = {CElist{ranks}};
+    output2 = {CSElist{ranks}};
+    
+    alternateRanks = randi([1,21], 1, 10)
+    struct = {{output1{12:21}}, {output2{12:21}}, {output1{alternateRanks}}, {output2{alternateRanks}}};
     
 end
