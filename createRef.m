@@ -2,7 +2,7 @@ function createRef(xyz)
     vol       = spm_vol(fullfile(pwd, 'Results', 'eupiRegressionMap.nii'));
 
     for k=1:vol.dim(3)
-        img      = spm_slice_vol(vol,spm_matrix([0 0 k]),vol.dim(1:2),0);;
+        img      = spm_slice_vol(vol,spm_matrix([0 0 k]),vol.dim(1:2),0);
         for i=1:vol.dim(1)
             for j=1:vol.dim(2)
                 if ~isnan(img(i, j))

@@ -17,7 +17,10 @@ function struct = biasSelect(CElist, CSElist, XYZ)
         img2 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3))]),vol.dim(1:2),0);
         img3 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3)+1)]),vol.dim(1:2),0);
         
-        if mean(~isnan(spm_read_vols(vol))) > 50
+        
+        volume = spm_read_vols(vol);
+        imgMean = mean(abs(volume(volume ~= 0 & ~isnan(volume))));
+        if imgMean > 10
             disp('active')
             img1=img1./100;
             img2=img2./100;
@@ -35,27 +38,28 @@ function struct = biasSelect(CElist, CSElist, XYZ)
         img1 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3)-1)]),vol.dim(1:2),0);
         img2 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3))]),vol.dim(1:2),0);
         img3 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3)+1)]),vol.dim(1:2),0);
-              
-        if mean(~isnan(spm_read_vols(vol))) > 100
-            disp('active2')
+        
+        if imgMean > 10
+            disp('active')
             img1=img1./100;
             img2=img2./100;
             img3=img3./100;
         end
         
         obsVal = [img1((XYZ(1)-1):(XYZ(1)+1), (XYZ(2)-1):(XYZ(2)+1)),...
-        img2((XYZ(1)-1):(XYZ(1)+1), (XYZ(2)-1):(XYZ(2)+1)),...
-        img3((XYZ(1)-1):(XYZ(1)+1), (XYZ(2)-1):(XYZ(2)+1))];
+                  img2((XYZ(1)-1):(XYZ(1)+1), (XYZ(2)-1):(XYZ(2)+1)),...
+                  img3((XYZ(1)-1):(XYZ(1)+1), (XYZ(2)-1):(XYZ(2)+1))];
         
         valueSEArray(i) = mean(mean(obsVal));
         
     end
         
-    [~, ranks] = sort(valueArray);
+    [val, ranks] = sort(valueArray);
+    disp(val)
     output1 = {CElist{ranks}};
     output2 = {CSElist{ranks}};
     
-    alternateRanks = randi([1,21], 1, 10)
-    struct = {{output1{12:21}}, {output2{12:21}}, {output1{alternateRanks}}, {output2{alternateRanks}}};
+    alternateRanks = randi([1,21], 1, 14)
+    struct = {{output1{14:21}}, {output2{14:21}}, {output1{1:8}}, {output2{1:8}}};
     
 end

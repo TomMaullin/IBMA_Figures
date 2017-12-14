@@ -1,10 +1,12 @@
 %==========================================================================
-%Generate display.
+%Generate niftis for display.
+%
+% type - 'het' for heterogeneity, 'pub' for publication bias.
 %
 %Authors: Thomas Maullin
 %==========================================================================
 
-function genFile()
+function temp = genFile(type)
     
 %     for i=1:21
 %         datapath = fullfile(pwd, ['pain', num2str(i, '%02.f')]);
@@ -28,12 +30,28 @@ function genFile()
         else
         end
     end 
-    xyz = [70, 29, 46]
-    temp = biasSelect(contrasts, contrastSEs, xyz)
     
-    createAll(temp{1}, temp{2}, fullfile(pwd, 'Results_biased'))
-    print('done')
-    createAll(temp{3}, temp{4}, fullfile(pwd, 'Results_unbiased'))
-    createRef(xyz)
+    if type == 'pub'
+        xyz = [42, 49, 49]
+        temp = biasSelect(contrasts, contrastSEs, xyz)
+
+        createAll(temp{1}, temp{2}, fullfile(pwd, 'Results_biased'))
+        createAll(temp{3}, temp{4}, fullfile(pwd, 'Results_unbiased'))
+        createRef(xyz)
+
+        masking.tm.tm_none = 1;
+        masking.im = 1;
+        masking.em = {''};
+
+
+        preprocessed_bias = readAndPreprocess(temp{1}, temp{2}, masking)
+        preprocessed_unbias = readAndPreprocess(temp{3}, temp{4}, masking)
+
+        funnelPlot(preprocessed_bias, xyz)
+        funnelPlot(preprocessed_unbias, xyz)
+    end
+    if type == 'het'
+        createAllHet(contrasts, contrastSEs, fullfile(pwd, 'Results_Het'))
+    end
     
 end
