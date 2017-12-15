@@ -49,9 +49,15 @@ function temp = genFile(type)
 
         funnelPlot(preprocessed_bias, xyz)
         funnelPlot(preprocessed_unbias, xyz)
+        disp('Beggs')
+        fdrImage('Results_biased/pBeggsCorrelationMap.nii')        
+        disp('Egger')
+        fdrImage('Results_biased/eupiRegressionMap.nii')
     end
     if type == 'het'
-        createAllHet(contrasts, contrastSEs, fullfile(pwd, 'Results_Het'))
+        createAllHet({contrasts{1:21}}, {contrastSEs{1:21}}, fullfile(pwd, 'Results_Het'))
+        disp('Het')
+        fdrImage('Results_het/pHeterogeneityMap.nii')
     end
     
 end
