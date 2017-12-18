@@ -20,7 +20,7 @@ function fdrImage(image)
     length(unique(pvals))
     
     %Obtain thresholds
-    [thr1, thr2] = FDR(pvals, 0.19);
+    [thr1, thr2] = FDR(pvals, 0.1);
     
     disp(thr1)
     disp(-log10(thr1))

@@ -11,10 +11,10 @@ function temp = genFile(type)
 %     for i=1:21
 %         datapath = fullfile(pwd, ['pain', num2str(i, '%02.f')]);
 %         mkdir(datapath) 
-%         websave(fullfile(datapath,'tmp.zip'), ['https://neurovault.org/collections/1425/pain_', num2str(i, '%02.f'), '.nidm.zip']);
+%         websave(fullfile(datapath,'tmp.zip'), ['https://neurovault.org/collections/HJLBXBNL/pain_', num2str(i, '%02.f'), '.nidm.zip']);
 %         unzip(fullfile(datapath, 'tmp.zip'), fullfile(datapath, '.'));
 %     end
-    
+%     
     for i=1:21
         datapath = fullfile(pwd, ['pain', num2str(i, '%02.f')]);
         if exist(fullfile(datapath, ['Contrast_T001.nii.gz']), 'file')
@@ -50,9 +50,9 @@ function temp = genFile(type)
         funnelPlot(preprocessed_bias, xyz)
         funnelPlot(preprocessed_unbias, xyz)
         disp('Beggs')
-        fdrImage('Results_biased/pBeggsCorrelationMap.nii')        
+        %fdrImage('Results_biased/pBeggsCorrelationMap.nii')        
         disp('Egger')
-        fdrImage('Results_biased/eupiRegressionMap.nii')
+        %fdrImage('Results_biased/eupiRegressionMap.nii')
     end
     if type == 'het'
         createAllHet({contrasts{1:21}}, {contrastSEs{1:21}}, fullfile(pwd, 'Results_Het'))

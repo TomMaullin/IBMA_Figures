@@ -5,7 +5,7 @@
 %Authors: Thomas Maullin
 %==========================================================================
 
-function struct = biasSelect(CElist, CSElist, XYZ)
+function struct = biasSelect(CElist, CSElist, XYZ, i)
     
     valueArray = [];
     valueSEArray = [];
@@ -40,7 +40,7 @@ function struct = biasSelect(CElist, CSElist, XYZ)
         img3 = spm_slice_vol(vol,spm_matrix([0 0 (XYZ(3)+1)]),vol.dim(1:2),0);
         
         if imgMean > 10
-            disp('active')
+            disp(i)
             img1=img1./100;
             img2=img2./100;
             img3=img3./100;
@@ -60,6 +60,6 @@ function struct = biasSelect(CElist, CSElist, XYZ)
     output2 = {CSElist{ranks}};
     
     alternateRanks = randi([1,21], 1, 14)
-    struct = {{output1{14:21}}, {output2{14:21}}, {output1{1:8}}, {output2{1:8}}};
+    struct = {{output1{13:21}}, {output2{13:21}}, {output1{1:9}}, {output2{1:9}}};
     
 end
